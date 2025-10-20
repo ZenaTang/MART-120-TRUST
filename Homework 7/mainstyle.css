@@ -1,0 +1,26 @@
+h1, h2 {
+    letter-spacing:2px;
+    text-transform:uppercase;
+    border-bottom:3px solid color(srgb rgba(255, 0, 157, 0.37) rgb(3, 119, 98) rgba(70, 70, 115, 0.392))
+    display: inline-bloocl;
+    padding-botton:4px; 
+}
+
+
+a{
+    color:#7c374f;
+    font-weight: Bold;
+    text-decoration-style:wavy
+}
+
+a:hover {
+  color: #7c374f;
+  text-decoration: underline;
+}
+
+/* Comment: Adds slight padding and border for all list-group items */
+.list-group-item {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  margin-bottom: 4px;
+  border-radius: 5px;
+}
