@@ -1,0 +1,63 @@
+body {
+  text-align: center;
+  max-width: 550px;
+  margin: 0 auto;
+  line-height: 1.3;
+  background-color: lavender;
+}
+
+h1, h2, h3, h4, h5 
+{    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-bottom: 3px solid rgba(113, 22, 78, 0.259);
+    display: inline-block;
+    padding-bottom: 4px; 
+}
+
+/* Comment:default link color site-wide */
+a {
+  color: #37061a;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: 14pt ;
+  text-decoration-style: underline;
+}
+
+a:hover {
+  color: #ad89a8;
+  text-decoration:line-through;
+  text-decoration-style:dashed;
+  background-color:#6d384d
+  
+}
+
+/* Comment:padding and border for all list-group items */
+.list-group-item {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+  color:#5c2b60da;
+  background-color:rgba(242, 215, 243, 0.744);
+  border: 3px solid rgba(87, 100, 107, 0.51);
+  margin-bottom: 4px;
+  border-radius: 5px;
+}
+
+
+#mysubmit {
+  background-color: rgb(193, 154, 167);
+  color:rgb(8, 53, 59);
+  border-radius: 50px;
+  border: 4 px, #6d384d;
+  cursor:pointer;
+
+  
+
+}
+
+body {
+  background-image: url('Montana_flowers.jpg');
+  background-size: 80%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+}
