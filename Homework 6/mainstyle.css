@@ -1,5 +1,8 @@
 body {
   text-align: center;
+  max-width: 550px;
+  margin: 0 auto;
+  line-height: 1.3;
   background-color: lavender;
 }
 
@@ -32,6 +35,8 @@ a:hover {
   max-width: 600px;
   margin: 0 auto;
   text-align: center;
+  color:#5c2b60da;
+  background-color:rgba(242, 215, 243, 0.744);
   border: 3px solid rgba(87, 100, 107, 0.51);
   margin-bottom: 4px;
   border-radius: 5px;
@@ -51,7 +56,7 @@ a:hover {
 
 body {
   background-image: url('Montana_flowers.jpg');
-  background-size: contain;
+  background-size: 80%;
   background-repeat: no-repeat;
   background-position: center center;
   background-attachment: fixed;
