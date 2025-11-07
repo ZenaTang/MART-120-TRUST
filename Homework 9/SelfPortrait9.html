@@ -1,5 +1,4 @@
 <html>
-
     <head>
         <title>
             First p5.js page
@@ -13,25 +12,38 @@
             var x = 285;
             var y = 200;
             var diameter = 50;
-            var speed=4
-            var x2 = 305
-            var y2 = 135
-            var speed2 = 3
-             
+            var speed = 4;
+            var x2 = 305;
+            var y2 = 135;
+            var speed2 = 3;
 
-             function setup()
+            var y3 = 200;
+            var speed3 = 2;
+
+            // title animation variables
+            var textSizeValue = 20;
+            var textSpeed = 1;
+            var growCount = 0;
+            var shrinking = false;
+
+            function setup()
             {
                 createCanvas(700,600);
+                textAlign(CENTER);
             }
-            function draw()    
-           {    
-                background(redColor,greenColor,blueColor);
-                
-        
 
-                rect(300,240,50,60);
-                ellipse(325,200,100,140) ;
+            function draw()    
+            {    
+                background(redColor,greenColor,blueColor);
+
+                // make sure shapes are outlines only
+                noFill();
+                stroke(0);
                 strokeWeight(5);
+
+                // body parts
+                rect(300,240,50,60);
+                ellipse(325,y3,100,140);
                 point(305, 200, 30, 75);
                 point(350, 200, 30, 75);
                 square(x2,y2,45);
@@ -45,21 +57,66 @@
                 rect(280,425,40,120);
                 rect(335,425,40,120);
                 ellipse(370,360,40,130);
-                 rect(320,240,10,10);
+                rect(320,240,10,10);
                 triangle(335, 230, 325, 215, 315, 230);
-                if(x>615||x<0)
 
-           {
-           speed*=-1
-           }
-              x+=speed   
-            
-            if(x2>615||x2<0&&y2>555||y2<0){
-               speed2*=-1
+                // moving square 1
+                if(x > 615 || x < 0)
+                {
+                    speed *= -1;
+                }
+                x += speed;
+
+                // moving square 2 diagonally
+                if(x2 > 615 || x2 < 0 || y2 > 555 || y2 < 0)
+                {
+                    speed2 *= -1;
+                }
+                x2 += speed2;
+                y2 += speed2;
+
+                // head bounce
+                if(y3 > 230 || y3 < 170)
+                {
+                    speed3 *= -1; 
+                }
+                y3 += speed3;
+
+                // now draw title — filled text only
+                fill(0);
+                noStroke();
+                textSize(textSizeValue);
+                text("The Worst Self-Portrait Ever", width / 2, height - 20);
+
+                // grow/shrink logic
+                if(!shrinking)
+                {
+                    textSizeValue += textSpeed;
+                    if(textSizeValue >= 25)
+                    {
+                        growCount++;
+                        if(growCount >= 5)
+                        {
+                            shrinking = true;
+                            growCount = 0;
+                        }
+                    }
+                }
+                else
+                {
+                    textSizeValue -= textSpeed;
+                    if(textSizeValue <= 20)
+                    {
+                        growCount++;
+                        if(growCount >= 5)
+                        {
+                            shrinking = false;
+                            growCount = 0;
+                        }
+                    }
+                }
             }
-            x2+=speed2
-            y2+=speed2
-        }
+
         </script>
     </head>
     <body>
