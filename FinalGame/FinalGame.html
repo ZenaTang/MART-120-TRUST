@@ -1,0 +1,358 @@
+<html>
+    <head>
+        <title>
+            Final Game!
+        </title>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js"></script>
+        <script>
+            let birdX = 400;
+            let birdY = 700;
+            let birdSize = 50;
+            let birdSpeed = 5;
+
+            let birdLives = 3;
+
+            let bugX;
+            let bugY
+            let bugSize = 30;
+
+            let bugVX;
+            let bugVY;
+            let bugSpeed = 6;
+
+            let showCaught = false;
+            let caughtStartTime = 0;
+            let caughtDuration = 3000;
+
+            let showStung = false;
+            let stungStart= 0;
+            let stungDuration = 2000;
+
+
+            let bees = [];
+            let numBees = 5;
+
+            let stars = [];
+
+        function setup() {  
+            createCanvas(800,800);
+
+            bugX = random(50, width - 50);
+            bugY = random(50, height / 2);
+
+            bugVX = random(-bugSpeed, bugSpeed);
+            bugVY = random(-bugSpeed, bugSpeed);
+
+            for (let i = 0; i < numBees; i ++) {
+                bees.push({
+                    x: random(width),
+                    y: random(height / 2),
+                    vx: random(-2, 2),
+                    vy: random(-2, 2)
+                });
+                
+            }
+        }
+       
+        function draw() {
+            background(189, 207, 175);
+
+            bugX += bugVX;
+            bugY += bugVY;
+
+            if (bugX > width) bugX = 0;
+            if (bugX < 0) bugX = width;
+            if (bugY > height) bugY = 0;
+            if (bugY < 0) bugY = height;
+
+            fill(255, 204, 0);
+            noStroke();
+            ellipse(150, 100, 150, 150)
+
+            drawClouds();
+
+            drawTrees();
+
+            drawBees();
+
+            drawBird(birdX, birdY);
+
+            drawBug(bugX, bugY);
+
+            birdMovement();
+
+            checkCatch();
+
+            createBorders(4);
+
+            for (let i = stars.length - 1; i >= 0; i--) {
+                let star = stars[i];
+
+                star.y += star.vy;
+
+                fill (152, 251, 152);
+                noStroke();
+                ellipse(star.x, star.y, 20, 20);
+
+                if (millis() - star.startTime > star.duration) {
+
+                }
+            }
+            fill(0);
+            textSize(20);
+            text("Lives: " + birdLives, 20, 30);
+
+            if (showStung) {
+                fill(0);
+                textSize(30);
+                textAlign(CENTER);
+                text("Stung!", width / 2, 80);
+
+                if (millis() - stungStart > stungDuration) {
+                    showStung = false;
+                }
+            }
+
+            if (showCaught) {
+                let elapsed = millis() - caughtStartTime;
+                if (floor(elapsed / 500) % 2 === 0) {
+                    fill(100, 0, 185);
+                    textSize(30);
+                    textAlign(CENTER);
+                    text("Caught Bug!!", width/2, 50);
+            }
+
+            if (elapsed > caughtDuration) {
+                showCaught = false;
+            }
+        }
+    }
+
+
+        function drawBird(x, y) {
+
+            fill(128, 0, 0);
+            noStroke();
+
+            triangle(x - birdSize / 5, y, x - birdSize, y - 20, x - birdSize, y + 15);
+            triangle(x + birdSize / 5, y, x + birdSize, y - 20, x + birdSize, y + 15);
+            
+            fill(205, 0, 0)
+            stroke(0);
+            circle(x, y, birdSize);
+
+            fill(255, 165, 0);
+            triangle (
+            x + birdSize / 3 + 5, y + 5,
+            x + birdSize / 3 - 18, y - 5, 
+            x + birdSize / 3 - 18, y + 15);
+
+            fill(0);
+            noStroke();
+            let eyeOffsetX = birdSize / 5;
+            let eyeOffsetY = birdSize / 5;
+            circle(x - eyeOffsetX, y - eyeOffsetY, birdSize / 6);
+            circle(x + eyeOffsetX, y - eyeOffsetY, birdSize / 6);
+
+            stroke(0);
+            strokeWeight(2);
+            let legLength = 10;
+            line(x - 8, y + birdSize / 2, x - 10, y + birdSize / 2 + legLength);
+            line(x + 8, y + birdSize / 2, x + 10, y + birdSize / 2 + legLength);
+            
+        }
+
+        function drawBug(x, y) {
+            fill(80, 80, 80);
+            stroke(0);
+            ellipse (x, y, bugSize, bugSize);
+
+            fill(0, 180, 180);
+            noStroke();
+            ellipse(x, y, bugSize * 0.5, bugSize * 0.5);
+
+            noStroke(139, 0, 0);
+            fill(173, 216, 230, 180);
+            ellipse(x - 12, y - 15, 18, 30);
+            ellipse(x + 12, y - 15, 18, 30);
+
+            stroke(0);
+            line(x - 10, y - 5, x - 20, y - 15);
+            line(x - 10, y + 5, x - 20, y + 15);
+            line(x + 10, y - 5, x + 20, y - 15);
+            line(x + 10, y + 5, x + 20, y + 15);
+            line(x - 10, y, x - 20, y);
+            line(x + 10, y, x + 20, y);
+        }
+
+        function drawClouds() {
+            fill(245, 245, 245);
+            noStroke();
+
+            ellipse(100, 100, 80, 50);
+            ellipse(140, 90, 80, 50)
+
+            ellipse(300, 60, 100, 60);
+            ellipse(360, 70, 90, 50);
+
+            ellipse(500, 120, 70, 40);
+            ellipse(540, 110, 80, 50);
+
+            ellipse(700, 80, 100, 60);
+            ellipse(740, 90, 90, 50);
+        }
+
+        function birdMovement() {
+            if (keyIsDown(87)) {
+                birdY -= birdSpeed;
+            }
+            if (keyIsDown(83)) {
+                birdY += birdSpeed;
+            }
+            if (keyIsDown(65)) {
+                birdX -= birdSpeed;
+            }
+            if (keyIsDown(68)) {
+                birdX += birdSpeed;
+            }
+
+            birdX = constrain(birdX, birdSize/2, width - birdSize/2);
+            birdY = constrain(birdY, birdSize/2, height - birdSize/2);
+        }
+
+        function checkCatch () {
+            let d = dist(birdX, birdY, bugX, bugY);
+            if (d < (birdSize/2 + bugSize/2)) {
+
+                bugX = random(50, width - 50);
+                bugY = random(50, height / 2);
+
+                showCaught = true;
+                caughtStartTime = millis();
+                birdLives = min(birdLives + 1, 10);
+                console.log("Caught Bug!! Lives: " + birdLives);
+            }
+        }
+
+        function createBorders(thickness){
+            fill(34, 70, 45);
+            stroke(20, 50, 30);
+            strokeWeight(2);
+
+            rect(0,0,width,thickness);
+
+            rect(0,0,thickness,height);
+
+            rect(0, height - thickness, width, thickness);
+
+            rect(width - thickness,0,thickness,height);
+    }
+
+        function drawTrees() {
+            let treeWidth = 55;
+            let treeHeight = 90;
+            let trunkWidth = 15;
+            let trunkHeight = 40;
+            let borderOffset = 4;
+            let rowSpacing = 150;
+
+            for (let row = 0; row < 3; row++) {
+                let xOffset = (row % 2 === 0) ? 70 : 90;
+                let yOffset = row * rowSpacing;
+                
+
+            for (let x = xOffset; x < width; x += 60) {
+                fill(0, 100, 0);
+                noStroke();
+                triangle(
+                    x, height - trunkHeight - treeHeight - borderOffset - yOffset, 
+                    x - treeWidth/2, height - trunkHeight - borderOffset - yOffset,
+                    x + treeWidth/2 , height - trunkHeight - borderOffset - yOffset);
+
+                fill(139, 69, 19);
+                rect(x - trunkWidth/2, height - trunkHeight - borderOffset - yOffset, trunkWidth, trunkHeight);
+                
+            }
+        }
+    }
+
+    function drawBees() {
+        for (let bee of bees) {
+
+        if (random() < 0.01) {
+            let dx = birdX - bee.x;
+            let dy = birdY - bee.y;
+            let distance = sqrt(dx*dx + dy*dy);
+            if (distance > 0) {
+                bee.vx += dx / distance * 0.2;
+                bee.vy += dy / distance * 0.2;
+            }
+        }
+
+        let speed = sqrt(bee.vx*bee.vx + bee.vy*bee.vy);
+        let maxSpeed = 3;
+        if (speed > maxSpeed) {
+            bee.vx = (bee.vx / speed) * maxSpeed;
+            bee.vy = (bee.vy / speed) * maxSpeed;
+
+        }
+
+        bee.x += bee.vx;
+        bee.y += bee.vy;
+
+        if (bee.x > width) bee.x = 0;
+        if (bee.x < 0) bee.x = width;
+        if (bee.y > height) bee.y = 0;
+        if (bee.y < 0) bee.y = height;
+
+        drawBee(bee.x, bee.y);
+
+        let d = dist(birdX, birdY , bee.x, bee.y);
+        if (d < (birdSize/2 + 15) && !showStung && birdLives > 0) {
+                birdLives --;
+                showStung = true;
+                stungStart = millis();
+                console.log("Stung! Lives left: " + birdLives);
+            
+
+            bee.x = random(width);
+            bee.y = random(height / 2);
+            bee.vx = 0;
+            bee.vy = 0;
+        }
+    }
+}
+        
+
+function drawBee(x, y) {
+    fill(255, 215, 0);
+    stroke(0);
+    circle(x, y, 30);
+
+    fill(0);
+    noStroke();
+    rect(x - 5, y - 15, 10, 30);
+
+    fill(173, 216, 230, 180);
+    ellipse(x - 10, y - 15, 15, 25);
+    ellipse(x + 10, y - 15, 15, 25);
+
+    fill(0);
+    triangle(x + 25, y, x + 15, y - 5, x + 15, y + 5);
+}
+
+function mousePressed() {
+    stars.push({
+    x: mouseX, y: mouseY, vy: 2, startTime: millis(), duration: 2000 
+});
+}
+
+
+
+</script>
+    </head>
+    <body>
+
+    </body>
+</html>
